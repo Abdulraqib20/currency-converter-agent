@@ -1,4 +1,5 @@
-.log
+*.log
+logs
 .env
 .env.local
 .env.development.local
