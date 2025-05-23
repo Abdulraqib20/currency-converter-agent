@@ -1,0 +1,200 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* Align to top for longer content */
+    min-height: 100vh;
+    padding-top: 20px;
+    /* Add some padding at the top */
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+header h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+header p {
+    color: #555;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.input-group {
+    display: flex;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    overflow: hidden;
+    /* To make sure child border-radius works */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+#queryInput {
+    flex-grow: 1;
+    padding: 15px 20px;
+    border: 1px solid #dce4ec;
+    border-right: none;
+    /* Remove right border as button will abut it */
+    font-size: 1em;
+    color: #333;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+#queryInput:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+#convertButton {
+    padding: 15px 25px;
+    background-color: #4a90e2;
+    /* Primary button color */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+#convertButton:hover {
+    background-color: #357abd;
+    /* Darker shade on hover */
+}
+
+#convertButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+#responseArea {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    min-height: 100px;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#responseArea.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.result-text {
+    color: #2c3e50;
+    font-size: 1.1em;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    /* Preserve whitespace and newlines from text */
+}
+
+.error-text {
+    color: #e74c3c;
+    /* Error color */
+    font-size: 1em;
+    font-weight: bold;
+}
+
+#loadingIndicator {
+    display: flex;
+    flex-direction: column;
+    /* Stack spinner and text vertically */
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #555;
+}
+
+#loadingIndicator.hidden {
+    display: none;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #4a90e2;
+    /* Spinner color matches button */
+    animation: spin 1s ease infinite;
+    margin-bottom: 10px;
+    /* Space between spinner and text */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    color: #777;
+    font-size: 0.9em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    #queryInput {
+        border-radius: 8px;
+        border-right: 1px solid #dce4ec;
+        /* Add back right border */
+        margin-bottom: 10px;
+        /* Space between input and button */
+        border-top-right-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+
+    #convertButton {
+        border-radius: 8px;
+        border-top-left-radius: 8px;
+    }
+}

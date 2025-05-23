@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Currency Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Currency Converter</h1>
+            <p>Enter your query below (e.g., "How much is 100 USD in EUR today?")</p>
+        </header>
+
+        <main>
+            <form id="conversionForm">
+                <div class="input-group">
+                    <input type="text" id="queryInput" name="query" placeholder="e.g., 100 dollars to euros" required>
+                    <button type="submit" id="convertButton">Convert</button>
+                </div>
+            </form>
+
+            <div id="responseArea">
+                <div id="loadingIndicator" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Converting...</p>
+                </div>
+                <div id="resultText" class="result-text"></div>
+                <div id="errorText" class="error-text"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AI Currency Converter. Powered by CrewAI & Groq.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('conversionForm');
+            const queryInput = document.getElementById('queryInput');
+            const convertButton = document.getElementById('convertButton');
+            const responseArea = document.getElementById('responseArea');
+            const resultText = document.getElementById('resultText');
+            const errorText = document.getElementById('errorText');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                const query = queryInput.value.trim();
+
+                if (!query) {
+                    errorText.textContent = 'Please enter a currency conversion query.';
+                    resultText.textContent = '';
+                    return;
+                }
+
+                // Clear previous results and show loading
+                resultText.textContent = '';
+                errorText.textContent = '';
+                responseArea.classList.add('active');
+                loadingIndicator.classList.remove('hidden');
+                convertButton.disabled = true;
+                queryInput.disabled = true;
+
+                try {
+                    const response = await fetch('/convert', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ query: query }),
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        resultText.innerHTML = formatResponse(data.response); // Use innerHTML for potential markdown
+                    } else {
+                        errorText.textContent = data.error || 'An unknown error occurred.';
+                    }
+                } catch (err) {
+                    console.error('Fetch error:', err);
+                    errorText.textContent = 'Failed to connect to the server. Please try again.';
+                }
+                finally {
+                    loadingIndicator.classList.add('hidden');
+                    convertButton.disabled = false;
+                    queryInput.disabled = false;
+                }
+            });
+
+            // Helper to format response - basic for now, can be expanded for markdown
+            function formatResponse(textResponse) {
+                // Replace newlines with <br> for HTML display
+                // If your agent's response contains markdown, you might use a library here.
+                return textResponse.replace(/\n/g, '<br>');
+            }
+        });
+    </script>
+</body>
+</html>
