@@ -25,10 +25,9 @@ currency-conversion-tool/
 |   |-- style.css
 |-- config/                         # Configuration files
 |   |-- appconfig.py                # Loads and manages API keys and other configs
-|-- .env                            # Environment variables (API keys - !!!DO NOT COMMIT THIS FILE!!!)
+|-- .env                            # Environment variables (API keys)
 |-- requirements.txt                # Python dependencies
 |-- README.md                       # This file
-|-- ... (other files like notebooks, venv, etc.)
 ```
 
 ## Prerequisites
@@ -42,7 +41,7 @@ currency-conversion-tool/
 
 1.  **Clone the Repository**:
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/Abdulraqib20/currency-converter-agent
     cd currency-conversion-tool
     ```
 
@@ -67,16 +66,8 @@ currency-conversion-tool/
         ```env
         EXCHANGE_RATE_API_KEY=your_exchangerate_api_key_here
         GROQ_API_KEY=your_groq_api_key_here
-        # Optional: Add other keys if your config/appconfig.py expects them
-        # OPENAI_API_KEY=your_openai_key_if_needed
-        # SERPER_API_KEY=your_serper_key_if_needed
-        # GOOGLE_API_KEY=your_google_key_if_needed
+        GOOGLE_API_KEY=your_google_key_if_needed
         ```
-    *   **Important**: Ensure `.env` is listed in your `.gitignore` file to prevent committing your API keys.
-
-5.  **Configure `config/appconfig.py`** (Alternative to `.env`):
-    *   The application first tries to load keys from `config/appconfig.py`. If you prefer this method, ensure it correctly sources your API keys (e.g., from system environment variables if not using the `.env` file for this module).
-    *   The current `config/appconfig.py` is designed to load from the `.env` file itself and then export those variables. Ensure this setup matches your deployment strategy if you modify it.
 
 ## Running the Application
 
@@ -154,7 +145,3 @@ You have two ways to use the currency converter:
 ## Contributing
 
 Contributions are welcome! Please feel free to fork the repository, make changes, and submit pull requests.
-
----
-
-This README provides a comprehensive guide to understanding, setting up, and running the Real-Time AI Currency Converter. Enjoy!
